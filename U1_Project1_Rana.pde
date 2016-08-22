@@ -1,17 +1,26 @@
+import ddf.minim.*;
 /*
 Rana Lulla's Project
-I don't really have a formal name as of yet, but it's basically a joystick
-controlled game where you dodge bullets and waves of projectiles.
-*/
+ I don't really have a formal name as of yet, but it's basically a joystick
+ controlled game where you dodge bullets and waves of projectiles.
+ */
 PVector v1;
 float x, y;
-int screenState, timer, attackPattern;
+int screenState, timer, attackPattern, score;
+boolean died;
+Minim minim;
+AudioPlayer music;
 
 ArrayList<ProjectileNormal> normalProjectiles = new ArrayList<ProjectileNormal>();
 ArrayList<ProjectileHoming> homingProjectiles = new ArrayList<ProjectileHoming>();
+ArrayList<ProjectileHomingAccurate> accurateHomingProjectiles = new ArrayList<ProjectileHomingAccurate>();
+
 
 void setup()
 {
+  minim = new Minim(this);
+
+  music = minim.loadFile("Megalovania.mp3");
   v1=new PVector(0, 0);
   imageMode(CENTER);
   fullScreen(P2D);
@@ -22,18 +31,40 @@ void setup()
 }
 void draw()
 {
-  if(mousePressed)
-  {
-    //killAll();
-  }
   switch(screenState)
   {
   case 0:
     startScreen();
     break;
   case 1:
+    music.play();
+
     gameCode();
     movementCode();
+    if (died)
+    {
+      music.close();
+      screenState=2;
+      music = minim.loadFile("Megalovania.mp3");
+    }
+    break;
+  case 2:
+    background(0);
+    killAll();
+    textSize(50);
+    text("You died!", width/2, height/3);
+    textSize(30);
+    text("Click to play again!", width/2, 2*(height/3));
+    text(score, width/2, height/2);
+    if (mousePressed)
+    {
+      x=width/2;
+      y=2*(height/3);
+      score=0;
+      screenState=1;
+      died=false;
+      timer=0;
+    }
     break;
   }
   fill(0, 0, 255);
@@ -55,8 +86,10 @@ void gameCode()
   background(255);
   if (millis()>timer)
   {
-    attackPattern=int(random(1, 3));
-    timer=millis()+15000;
+    x=width/2;
+    y=3*(height/4);
+    attackPattern=int(random(1, 4));
+    timer=millis()+5000;
     switch(attackPattern)
     {
     case 1: 
@@ -65,9 +98,11 @@ void gameCode()
     case 2:
       Attack2();
       break;
+    case 3:
+      Attack3();
+      break;
     }
   }
-  //println(attackPattern);
   switch(attackPattern)
   {
   case 1:
@@ -76,8 +111,14 @@ void gameCode()
   case 2:
     attack2Update();
     break;
+  case 3:
+    attack3Update();
+    break;
   }
   movementCode();
+  score++;
+  textSize(10);
+  text(score, 10, 10);
 }
 void attack1Update()
 {
@@ -89,7 +130,7 @@ void attack1Update()
     part.collision();
     if (part.collide)
     {
-      text("YOUDIED", width/2, height/2);
+      died=true;
     }
     if (part.kill)
     {
@@ -106,10 +147,24 @@ void attack2Update()
     part.collision();
     if (part.collide)
     {
-      text("YOUDIED", width/2, height/2);
+      died=true;
     }
   }
 }
+void attack3Update()
+{
+  for (int i=0; i<accurateHomingProjectiles.size(); i++)
+  {
+    ProjectileHomingAccurate part = accurateHomingProjectiles.get(i);
+    part.move();
+    part.collision();
+    if (part.collide)
+    {
+      died=true;
+    }
+  }
+}
+
 void movementCode()
 {
   fill(0);
@@ -123,31 +178,14 @@ void movementCode()
   fill(0, 0, 255);
   ellipse(x, y, 10, 10);
   fill(0);
-  if(x<0)
+  if (x<0||y<0||x>width||y>height)
   {
-    x=0;
-  }
-  if(y<0)
-  {
-    y=0;
-  }
-  if(x>width)
-  {
-    x=width;
-  }
-  if(y>height)
-  {
-    y=height;
+    died=true;
   }
 }
 void killAll()
 {
-  while (0<normalProjectiles.size())
-  {
-    normalProjectiles.remove(0);
-  }
-  while (0<homingProjectiles.size())
-  {
-    homingProjectiles.remove(0);
-  }
+  normalProjectiles.clear();
+  homingProjectiles.clear();
+  accurateHomingProjectiles.clear();
 }

@@ -19,3 +19,15 @@ void Attack2()
     homingProjectiles.add(new ProjectileHoming(width, random(height), 0, 0));
   }
 }
+void Attack3()
+{
+  killAll();
+
+  for (int i=0; i<5; i++)
+  {
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(random(width), 0, 0, 0));
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(0, random(height), 0, 0));
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(random(width), height, 0, 0));
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(width, random(height), 0, 0));
+  }
+}
