@@ -49,11 +49,23 @@ void Attack4()
 void Attack5()
 {
   killAll();
-  
+
   for (int i=0; i<40; i++)
   {
     normalProjectiles.add(new ProjectileNormal(random(width), 0, 0, 4));
     normalProjectiles.add(new ProjectileNormal(random(width), -300, 0, 4));
     normalProjectiles.add(new ProjectileNormal(random(width), -600, 0, 4));
+  }
+}
+void Attack6()
+{
+  killAll();
+  
+  for (int i=0; i<5; i++)
+  {
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(0, random(height), 0, 0));
+    accurateHomingProjectiles.add(new ProjectileHomingAccurate(width, random(height), 0, 0));
+    homingProjectiles.add(new ProjectileHoming(random(width), height, 0, 0));
+    homingProjectiles.add(new ProjectileHoming(random(width), 0, 0, 0));
   }
 }

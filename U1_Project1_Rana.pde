@@ -82,7 +82,7 @@ void gameCode()
   {
     x=width/2;
     y=3*(height/4);
-    attackPattern=int(random(1, 6));
+    attackPattern=int(random(1, 7));
     timer=millis()+5000;
     switch(attackPattern)
     {
@@ -100,6 +100,9 @@ void gameCode()
       break;
     case 5:
       Attack5();
+      break;
+    case 6:
+      Attack6();
       break;
     }
   }
