@@ -82,7 +82,7 @@ void gameCode()
   {
     x=width/2;
     y=3*(height/4);
-    attackPattern=int(random(1, 4));
+    attackPattern=int(random(1, 6));
     timer=millis()+5000;
     switch(attackPattern)
     {
@@ -95,31 +95,25 @@ void gameCode()
     case 3:
       Attack3();
       break;
+    case 4:
+      Attack4();
+      break;
+    case 5:
+      Attack5();
+      break;
     }
   }
-  switch(attackPattern)
-  {
-  case 1:
-    attack1Update();
-    break;
-  case 2:
-    attack2Update();
-    break;
-  case 3:
-    attack3Update();
-    break;
-  }
+  attackUpdate();
   movementCode();
   score++;
   textSize(10);
   text(score, 10, 10);
 }
-void attack1Update()
+void attackUpdate()
 {
   for (int i=0; i<normalProjectiles.size(); i++)
   {
     ProjectileNormal part = normalProjectiles.get(i);
-    part.killBottom();
     part.move();
     part.collision();
     if (part.collide)
@@ -131,9 +125,16 @@ void attack1Update()
       normalProjectiles.remove(i);
     }
   }
-}
-void attack2Update()
-{
+  for (int i=0; i<accurateHomingProjectiles.size(); i++)
+  {
+    ProjectileHomingAccurate part = accurateHomingProjectiles.get(i);
+    part.move();
+    part.collision();
+    if (part.collide)
+    {
+      died=true;
+    }
+  }
   for (int i=0; i<homingProjectiles.size(); i++)
   {
     ProjectileHoming part = homingProjectiles.get(i);
@@ -145,20 +146,6 @@ void attack2Update()
     }
   }
 }
-void attack3Update()
-{
-  for (int i=0; i<accurateHomingProjectiles.size(); i++)
-  {
-    ProjectileHomingAccurate part = accurateHomingProjectiles.get(i);
-    part.move();
-    part.collision();
-    if (part.collide)
-    {
-      died=true;
-    }
-  }
-}
-
 void movementCode()
 {
   fill(0);
@@ -185,10 +172,6 @@ void killAll()
 }
 void tutorial()
 {
-  if (mousePressed)
-  {
-    print(mouseX, mouseY);
-  }
   background(255);
   movementCode();
   textSize(30);
@@ -218,7 +201,7 @@ void tutorial()
   {
     y=height;
   }
-  fill(255,0,0);
+  fill(255, 0, 0);
   ellipse(x, y, 10, 10);
 }
 void died()
