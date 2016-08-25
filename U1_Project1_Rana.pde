@@ -7,7 +7,7 @@ Rana Lulla's Project
 PVector v1;
 float x, y, multiplier=0.75;
 int screenState, timer, attackPattern, score;
-boolean died;
+boolean died, nightMode;
 Minim minim;
 AudioPlayer music;
 
@@ -62,10 +62,18 @@ void draw()
 void startScreen()
 {
   background(0);
+  textSize(75);
+  text("Night Mode", width/2, 200);
+  if (mousePressed&&mouseX>500&&mouseX<780&&mouseY>125&&mouseY<225)
+  {
+    nightMode=true;
+    screenState=1;
+  }
   textSize(200);
   text("Start", width/2, height/2);
   if (mousePressed&&mouseX>400&&mouseX<880&&mouseY>300&&mouseY<450)
   {
+    nightMode=false;
     screenState=1;
   }
   textSize(75);
@@ -77,12 +85,20 @@ void startScreen()
 }
 void gameCode()
 {
-  background(255);
+  if (nightMode==false)
+  {
+    background(255);
+  }
+  if (nightMode==true)
+  {
+    background(0);
+    ellipse(x, y, 600, 600);
+  }
   if (millis()>timer)
   {
     x=width/2;
     y=3*(height/4);
-    attackPattern=int(random(1,7));
+    attackPattern=int(random(1, 7));
     timer=millis()+5000;
     switch(attackPattern)
     {
@@ -111,7 +127,15 @@ void gameCode()
   score++;
   multiplier+=0.00025;
   textSize(10);
-  text(score, 10, 10);
+  if (nightMode)
+  {
+    fill(255);
+    text(score, 10, 10);
+  } else
+  {
+    fill(0);
+    text(score, 10, 10);
+  }
 }
 void attackUpdate()
 {
