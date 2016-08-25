@@ -109,10 +109,7 @@ void gameCode()
   attackUpdate();
   movementCode();
   score++;
-  if(score%500==0)
-  {
-    multiplier+=0.125;
-  }
+  multiplier+=0.00025;
   textSize(10);
   text(score, 10, 10);
 }
