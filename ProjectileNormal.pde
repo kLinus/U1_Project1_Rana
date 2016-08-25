@@ -6,7 +6,7 @@ class ProjectileNormal extends Projectile
   }
   void move()
   {
-    projX+=velX;
-    projY+=velY;
+    projX+=multiplier*velX;
+    projY+=multiplier*velY;
   }
 }

@@ -5,7 +5,7 @@ Rana Lulla's Project
  controlled game where you dodge bullets and waves of projectiles.
  */
 PVector v1;
-float x, y;
+float x, y, multiplier=0.75;
 int screenState, timer, attackPattern, score;
 boolean died;
 Minim minim;
@@ -82,7 +82,7 @@ void gameCode()
   {
     x=width/2;
     y=3*(height/4);
-    attackPattern=int(random(1, 7));
+    attackPattern=int(random(1,7));
     timer=millis()+5000;
     switch(attackPattern)
     {
@@ -109,6 +109,10 @@ void gameCode()
   attackUpdate();
   movementCode();
   score++;
+  if(score%500==0)
+  {
+    multiplier+=0.125;
+  }
   textSize(10);
   text(score, 10, 10);
 }
@@ -157,8 +161,8 @@ void movementCode()
   v1.normalize();
   line(width/2, 3*(height/4), mouseX, mouseY);
   ellipse(width/2, 3*(height/4), 20, 20);
-  x+=6*(v1.x);
-  y+=6*(v1.y);
+  x+=multiplier*6*v1.x;
+  y+=multiplier*6*v1.y;
   fill(255, 0, 0);
   ellipse(x, y, 10, 10);
   fill(0);
@@ -229,6 +233,7 @@ void died()
 }
 void reset()
 {
+  multiplier=0.75;
   x=width/2;
   y=2*(height/3);
   score=0;

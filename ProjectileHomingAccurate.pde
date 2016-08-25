@@ -12,8 +12,8 @@ class ProjectileHomingAccurate extends Projectile
     v1.x=projX-x;
     v1.y=projY-y;
     v1.normalize();
-    projX-=5*v1.x;
-    projY-=5*v1.y;
+    projX-=multiplier*(5*v1.x);
+    projY-=multiplier*(5*v1.y);
     //line(projX,projY,x,y);
   }
 }

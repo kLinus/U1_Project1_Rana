@@ -8,19 +8,19 @@ class ProjectileHoming extends Projectile
   {
     if(projX<x)
     {
-      projX+=3;
+      projX+=multiplier*3;
     }
     if(projX>x)
     {
-      projX-=3;
+      projX-=multiplier*3;
     }
     if(projY<y)
     {
-      projY+=3;
+      projY+=multiplier*3;
     }
     if(projY>y)
     {
-      projY-=3;
+      projY-=multiplier*3;
     }
   }
 }
