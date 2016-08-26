@@ -6,6 +6,7 @@ class ProjectileNormal extends Projectile
   }
   void move()
   {
+    //Most basic projectile, just adds the velocity
     projX+=multiplier*velX;
     projY+=multiplier*velY;
   }

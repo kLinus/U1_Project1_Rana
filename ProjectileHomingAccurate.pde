@@ -9,11 +9,11 @@ class ProjectileHomingAccurate extends Projectile
   }
   void move()
   {
-    v1.x=projX-x;
-    v1.y=projY-y;
+    //Homing code using vectors (similar to the players movement code)
+    v1.x=projX-player.x;
+    v1.y=projY-player.y;
     v1.normalize();
     projX-=multiplier*(5*v1.x);
     projY-=multiplier*(5*v1.y);
-    //line(projX,projY,x,y);
   }
 }

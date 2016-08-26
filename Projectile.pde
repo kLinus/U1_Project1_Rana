@@ -11,8 +11,9 @@ class Projectile
   }
   void collision()
   {
+    //Testing the distance to see if there is collision
     fill(255,0,0);
-    distance=dist(projX, projY, x, y);
+    distance=dist(projX, projY, player.x, player.y);
     if (distance<=5+size/2)
     {
       collide=true;

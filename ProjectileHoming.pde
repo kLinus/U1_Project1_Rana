@@ -6,19 +6,20 @@ class ProjectileHoming extends Projectile
   }
   void move()
   {
-    if(projX<x)
+    //Basic homing code, simply goes up if it's below character, down if it's above, etc. 
+    if(projX<player.x)
     {
       projX+=multiplier*3;
     }
-    if(projX>x)
+    if(projX>player.x)
     {
       projX-=multiplier*3;
     }
-    if(projY<y)
+    if(projY<player.y)
     {
       projY+=multiplier*3;
     }
-    if(projY>y)
+    if(projY>player.y)
     {
       projY-=multiplier*3;
     }

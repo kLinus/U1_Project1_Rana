@@ -1,3 +1,5 @@
+//Different attack patterns
+
 void Attack1()
 {
   killAll();
