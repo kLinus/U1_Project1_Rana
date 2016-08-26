@@ -39,7 +39,6 @@ void draw()
     break;
   case 1:
     music.play();
-
     gameCode();
     if (died)
     {
@@ -145,9 +144,11 @@ void gameCode()
   {
     fill(255);
     text(score, 10, 10);
+    text(millis()-timer, width-20, 20);
   } else
   {
     fill(0);
+    text(timer-millis(), width-20, 10);
     text(score, 10, 10);
   }
 }

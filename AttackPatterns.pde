@@ -40,7 +40,7 @@ void Attack4()
   for (int i=0; i<50; i++)
   {
     normalProjectiles.add(new ProjectileNormal(random(width), 0, 0, 3));
-    normalProjectiles.add(new ProjectileNormal(random(width), -100, 0, 3));
+    normalProjectiles.add(new ProjectileNormal(random(width), -500, 0, 3));
   }
   for (int i=0; i<5; i++)
   {
